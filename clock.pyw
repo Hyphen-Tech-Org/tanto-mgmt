@@ -357,18 +357,29 @@ def main():
     menu.add_separator()
     menu.add_command(label="Quit", command=root.destroy)
 
-    # メニュー表示中フラグ。表示中は最前面の再主張を止め、メニューが時計の裏に
-    # 隠れないようにする（-topmost を周期的に付け直すと開いた瞬間に被るため）。
+    # メニュー表示中だけ最前面の再主張を止める（時計がメニューに被らないように）。
+    # 閉じたかどうかは winfo_ismapped() で実際に監視し、イベント取りこぼしで
+    # フラグが固まって「ずっと最前面でなくなる」事故を防ぐ。
     menu_open = {"v": False}
 
-    def _menu_closed(_e=None):
+    def _resume_topmost():
         menu_open["v"] = False
         try:
-            root.attributes("-topmost", True)   # 閉じたら即座に最前面へ復帰
+            root.attributes("-topmost", True)
+            root.lift()
         except tk.TclError:
             pass
 
-    menu.bind("<Unmap>", _menu_closed)
+    def _watch_menu():
+        # メニューがまだ表示中なら監視継続、閉じていれば最前面へ復帰
+        try:
+            still = bool(menu.winfo_ismapped())
+        except tk.TclError:
+            still = False
+        if still:
+            root.after(120, _watch_menu)
+        else:
+            _resume_topmost()
 
     def popup(e):
         menu_open["v"] = True
@@ -380,6 +391,7 @@ def main():
             menu.tk_popup(e.x_root, e.y_root)
         finally:
             menu.grab_release()
+        root.after(200, _watch_menu)   # メニューが消えたら確実に最前面へ戻す（保険）
 
     canvas.bind("<Button-3>", popup)
     root.bind("<Escape>", lambda e: root.destroy())   # Escで終了
@@ -399,9 +411,10 @@ def main():
             try:
                 root.attributes("-topmost", False)
                 root.attributes("-topmost", True)
+                root.lift()
             except tk.TclError:
                 pass
-        root.after(2000, keep_top)
+        root.after(1000, keep_top)    # 1秒ごとに再主張（下に潜ってもすぐ復帰）
 
     keep_top()
     tick(root, canvas)
