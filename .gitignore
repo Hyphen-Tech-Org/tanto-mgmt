@@ -1,0 +1,8 @@
+pomo_count.json
+window_pos.json
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+Thumbs.db
+desktop.ini
