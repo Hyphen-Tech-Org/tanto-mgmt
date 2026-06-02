@@ -1,0 +1,6 @@
+# Modern, recommended clock UI (clock_qt.py) — anti-aliased Catalyst design.
+# Windows 11 / macOS. Lightweight (~60 MB RAM).
+PySide6-Essentials>=6.6
+
+# Note: the "lite" alternative clock.pyw uses only the Python standard
+# library (tkinter) and needs NO dependencies at all.

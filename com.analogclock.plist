@@ -3,7 +3,7 @@
 <!--
   macOS auto-start + auto-revive for AnalogClock (launchd LaunchAgent).
   Install:
-    1) Edit the clock.pyw path below to the ABSOLUTE path on your Mac.
+    1) Edit the clock_qt.py path below to the ABSOLUTE path on your Mac.
     2) cp com.analogclock.plist ~/Library/LaunchAgents/
     3) launchctl load ~/Library/LaunchAgents/com.analogclock.plist
   RunAtLoad starts it at login; KeepAlive auto-restarts it if it ever quits
@@ -17,7 +17,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/python3</string>
-        <string>/REPLACE/WITH/ABSOLUTE/PATH/TO/clock.pyw</string>
+        <string>/REPLACE/WITH/ABSOLUTE/PATH/TO/clock_qt.py</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

@@ -1,5 +1,7 @@
 pomo_count.json
 window_pos.json
+settings.json
+.clock.lock
 __pycache__/
 *.pyc
 *.pyo
