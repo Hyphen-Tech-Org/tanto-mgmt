@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS auto-start + auto-revive for AnalogClock (launchd LaunchAgent).
+  Install:
+    1) Edit the clock.pyw path below to the ABSOLUTE path on your Mac.
+    2) cp com.analogclock.plist ~/Library/LaunchAgents/
+    3) launchctl load ~/Library/LaunchAgents/com.analogclock.plist
+  RunAtLoad starts it at login; KeepAlive auto-restarts it if it ever quits
+  (the macOS equivalent of the Windows Startup shortcut + watchdog task).
+  To stop:  launchctl unload ~/Library/LaunchAgents/com.analogclock.plist
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.analogclock</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/REPLACE/WITH/ABSOLUTE/PATH/TO/clock.pyw</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>ProcessType</key>
+    <string>Interactive</string>
+</dict>
+</plist>

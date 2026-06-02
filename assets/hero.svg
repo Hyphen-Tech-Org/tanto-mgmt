@@ -1,75 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" font-family="'Yu Gothic UI','Segoe UI',system-ui,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 440" width="1280" height="440" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
   <defs>
-    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f6f8fa"/>
-      <stop offset="1" stop-color="#eaf0f6"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#09090b"/>
+      <stop offset="1" stop-color="#18181b"/>
     </linearGradient>
-    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
-      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#0b2545" flood-opacity="0.18"/>
+    <filter id="clockShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#000000" flood-opacity="0.55"/>
     </filter>
   </defs>
 
   <!-- Background -->
-  <rect x="0" y="0" width="1280" height="440" rx="24" fill="url(#bgGrad)"/>
+  <rect x="0" y="0" width="1280" height="440" rx="24" fill="url(#bg)"/>
+  <rect x="1" y="1" width="1278" height="438" rx="23" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
 
-  <!-- LEFT: title, tagline, chips -->
-  <g>
-    <text x="80" y="150" font-size="64" font-weight="800" fill="#0b2545">🕒 Analog Clock</text>
-    <text x="82" y="200" font-size="24" font-weight="500" fill="#33475b">A tiny, portable, always-on-top desktop clock for Windows — zero install.</text>
+  <!-- LEFT: copy -->
+  <text x="80" y="150" font-size="64" font-weight="800" fill="#ffffff">🕒 Analog Clock</text>
+  <text x="82" y="200" font-size="22" fill="#a1a1aa">A tiny, portable, always-on-top desktop clock — Windows &amp; macOS. Zero install.</text>
 
-    <!-- feature chips -->
-    <g font-size="20" font-weight="700">
-      <!-- Zero install -->
-      <rect x="80" y="250" width="150" height="48" rx="24" fill="#0b2545"/>
-      <text x="155" y="280" text-anchor="middle" fill="#ffffff">Zero install</text>
-      <!-- tkinter only -->
-      <rect x="246" y="250" width="156" height="48" rx="24" fill="#0b2545"/>
-      <text x="324" y="280" text-anchor="middle" fill="#ffffff">tkinter only</text>
-      <!-- Always on top -->
-      <rect x="418" y="250" width="176" height="48" rx="24" fill="#0b2545"/>
-      <text x="506" y="280" text-anchor="middle" fill="#ffffff">Always on top</text>
-      <!-- Pomodoro -->
-      <rect x="610" y="250" width="140" height="48" rx="24" fill="#0b2545"/>
-      <text x="680" y="280" text-anchor="middle" fill="#ffffff">Pomodoro</text>
-    </g>
+  <!-- chips -->
+  <g font-size="18" font-weight="600">
+    <!-- Zero install -->
+    <rect x="82" y="250" width="138" height="44" rx="12" fill="#27272a" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="151" y="278" text-anchor="middle" fill="#ffffff">Zero install</text>
+    <!-- tkinter only -->
+    <rect x="232" y="250" width="138" height="44" rx="12" fill="#27272a" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="301" y="278" text-anchor="middle" fill="#ffffff">tkinter only</text>
+    <!-- Always on top -->
+    <rect x="382" y="250" width="158" height="44" rx="12" fill="#27272a" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="461" y="278" text-anchor="middle" fill="#ffffff">Always on top</text>
+    <!-- Pomodoro -->
+    <rect x="552" y="250" width="128" height="44" rx="12" fill="#27272a" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="616" y="278" text-anchor="middle" fill="#ffffff">Pomodoro</text>
+    <!-- accent: Catalyst UI -->
+    <rect x="82" y="306" width="148" height="44" rx="12" fill="#3b82f6"/>
+    <text x="156" y="334" text-anchor="middle" fill="#ffffff">Catalyst UI</text>
   </g>
 
-  <!-- RIGHT: clock illustration (reused, scaled) -->
-  <g transform="translate(940,30) scale(1.5)" filter="url(#softShadow)">
-    <!-- Face -->
-    <circle cx="120" cy="120" r="118" fill="#FFFFFF" stroke="#000000" stroke-width="3"/>
-
-    <!-- 12 hour ticks -->
-    <g stroke="#222222" stroke-width="3" stroke-linecap="round">
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(0 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(30 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(60 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(90 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(120 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(150 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(180 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(210 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(240 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(270 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(300 120 120)"/>
-      <line x1="120" y1="14" x2="120" y2="30" transform="rotate(330 120 120)"/>
+  <!-- RIGHT: clock illustration (reused TASK 1 clock), scaled & positioned -->
+  <g transform="translate(820,26) scale(1.45)" filter="url(#clockShadow)">
+    <circle cx="130" cy="128" r="112" fill="#18181b" stroke="#3f3f46" stroke-width="2"/>
+    <g stroke="#d4d4d8" stroke-width="3" stroke-linecap="round">
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(0 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(30 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(60 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(90 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(120 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(150 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(180 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(210 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(240 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(270 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(300 130 128)"/>
+      <line x1="130" y1="28" x2="130" y2="42" transform="rotate(330 130 128)"/>
     </g>
-
-    <!-- Pomodoro count -->
-    <text x="120" y="50" text-anchor="middle" font-size="12" font-weight="700" fill="#666666">Today: 3</text>
-
-    <!-- Digital time -->
-    <text x="120" y="86" text-anchor="middle" font-size="22" font-weight="700" fill="#000000">10:08:42</text>
-
-    <!-- Hands at 10:08:42 -->
-    <line x1="120" y1="120" x2="73.6" y2="88.7" stroke="#000000" stroke-width="6" stroke-linecap="round"/>
-    <line x1="120" y1="120" x2="183.7" y2="70.6" stroke="#000000" stroke-width="4" stroke-linecap="round"/>
-    <line x1="120" y1="120" x2="34.8" y2="147.7" stroke="#D00000" stroke-width="2" stroke-linecap="round"/>
-
-    <!-- center dot -->
-    <circle cx="120" cy="120" r="5" fill="#000000"/>
-
-    <!-- Date -->
-    <text x="120" y="170" text-anchor="middle" font-size="16" font-weight="700" fill="#000000">Mon 1 Jun 2026</text>
+    <text x="130" y="56" text-anchor="middle" font-size="11" fill="#71717a">Today: 3</text>
+    <text x="130" y="82" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">10:08:42</text>
+    <line x1="130" y1="128" x2="83.6" y2="96.7" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+    <line x1="130" y1="128" x2="193.2" y2="79.0" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+    <line x1="130" y1="128" x2="45.4" y2="155.5" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="130" cy="128" r="5" fill="#ffffff"/>
+    <text x="130" y="185" text-anchor="middle" font-size="14" font-weight="700" fill="#a1a1aa">Mon 1 Jun 2026</text>
   </g>
 </svg>
