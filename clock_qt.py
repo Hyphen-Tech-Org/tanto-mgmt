@@ -80,6 +80,8 @@ class Clock(QtWidgets.QWidget):
             self.count, self.count_date = 0, today()
         self.pomo = {"active": False, "phase": "work", "running": False,
                      "remaining": 0.0, "total": 0.0, "last": None}
+        self._restore_pomo(s)          # 進行中のポモドーロを復元（再起動・自動復活でも継続）
+        self._pomo_saved = datetime.now()
         self._drag = None
         self.font_family = self._resolve_font()
 
@@ -124,20 +126,43 @@ class Clock(QtWidgets.QWidget):
         self.move(geo.right() - self._win_size() - 20, geo.top() + 20)
 
     def _save_settings(self):
-        save_json(SETTINGS_FILE, {"theme": self.theme, "size": self.face_size,
-                                  "count": self.count, "countDate": self.count_date})
+        P = self.pomo
+        save_json(SETTINGS_FILE, {
+            "theme": self.theme, "size": self.face_size,
+            "count": self.count, "countDate": self.count_date,
+            "pomo": {"active": P["active"], "phase": P["phase"], "running": P["running"],
+                     "remaining": round(float(P["remaining"]), 2),
+                     "savedAt": datetime.now().timestamp()},
+        })
 
     # ---- pomodoro ----
+    def _restore_pomo(self, s):
+        ps = s.get("pomo") or {}
+        if not ps.get("active"):
+            return
+        phase = ps.get("phase", "work")
+        total = (WORK_MIN if phase == "work" else BREAK_MIN) * 60
+        rem = float(ps.get("remaining", total))
+        running = bool(ps.get("running", False))
+        if running:
+            now_ts = datetime.now().timestamp()
+            rem -= max(0.0, now_ts - float(ps.get("savedAt", now_ts)))  # 停止中の経過も差し引く
+        self.pomo.update(active=True, phase=phase, running=running,
+                         total=total, remaining=max(0.0, rem), last=datetime.now())
+
     def pomo_start(self):
         self.pomo.update(active=True, running=True, phase="work",
                          total=WORK_MIN * 60, remaining=WORK_MIN * 60, last=datetime.now())
+        self._save_settings()
 
     def pomo_toggle(self):
         if self.pomo["active"]:
             self.pomo["running"] = not self.pomo["running"]
+            self._save_settings()
 
     def pomo_reset(self):
         self.pomo.update(active=False, running=False)
+        self._save_settings()
 
     def _pomo_switch(self):
         if self.pomo["phase"] == "work":
@@ -149,6 +174,7 @@ class Clock(QtWidgets.QWidget):
         self.pomo["total"] = (WORK_MIN if self.pomo["phase"] == "work" else BREAK_MIN) * 60
         self.pomo["remaining"] = self.pomo["total"]
         QtWidgets.QApplication.beep()
+        self._save_settings()
 
     # ---- loop ----
     def _tick(self):
@@ -162,6 +188,9 @@ class Clock(QtWidgets.QWidget):
             if P["remaining"] <= 0:
                 self._pomo_switch()
         P["last"] = now
+        if P["active"] and (now - self._pomo_saved).total_seconds() >= 5:
+            self._pomo_saved = now      # 進行中ポモを定期保存（再起動/クラッシュでも継続）
+            self._save_settings()
         self.update()
 
     def _reassert_top(self):
