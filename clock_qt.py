@@ -93,6 +93,12 @@ class Clock(QtWidgets.QWidget):
         self.timer.timeout.connect(self._tick)
         self.timer.start(UPDATE_MS)
 
+        # 最前面の再主張（他の最前面アプリより上に居続ける。メニュー表示中は除外）
+        self._menu_open = False
+        self.top_timer = QTimer(self)
+        self.top_timer.timeout.connect(self._reassert_top)
+        self.top_timer.start(1500)
+
     # ---- helpers ----
     def _resolve_font(self):
         fams = set(QtGui.QFontDatabase.families())
@@ -157,6 +163,21 @@ class Clock(QtWidgets.QWidget):
                 self._pomo_switch()
         P["last"] = now
         self.update()
+
+    def _reassert_top(self):
+        # メニュー表示中は何もしない（メニューを時計の裏に回さない）
+        if self._menu_open:
+            return
+        try:
+            if IS_WIN:
+                import ctypes
+                HWND_TOPMOST = -1
+                SWP = 0x0001 | 0x0002 | 0x0010  # NOSIZE | NOMOVE | NOACTIVATE
+                ctypes.windll.user32.SetWindowPos(int(self.winId()), HWND_TOPMOST, 0, 0, 0, 0, SWP)
+            else:
+                self.raise_()
+        except Exception:
+            pass
 
     # ---- painting ----
     def paintEvent(self, _e):
@@ -354,7 +375,12 @@ class Clock(QtWidgets.QWidget):
 
         menu.addSeparator()
         act("Quit", self.close, "Esc")
-        menu.exec(e.globalPos())
+        self._menu_open = True       # 表示中は最前面の再主張を止め、メニューを最上位に
+        try:
+            menu.exec(e.globalPos())
+        finally:
+            self._menu_open = False
+            self.raise_()
 
 
 def single_instance():
